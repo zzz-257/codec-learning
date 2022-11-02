@@ -61,6 +61,7 @@ CIRCLEQ_LOOP_PREV	rtsp/inc/queue.h	/^#define CIRCLEQ_LOOP_PREV(/;"	d
 CIRCLEQ_NEXT	rtsp/inc/queue.h	/^#define	CIRCLEQ_NEXT(/;"	d
 CIRCLEQ_PREV	rtsp/inc/queue.h	/^#define	CIRCLEQ_PREV(/;"	d
 CIRCLEQ_REMOVE	rtsp/inc/queue.h	/^#define	CIRCLEQ_REMOVE(/;"	d
+CLEAR	v4l2/capture.c	/^#define CLEAR(/;"	d	file:
 CLEAR	v4l2/src/v4l2.c	/^#define CLEAR(/;"	d	file:
 CONFIG_COND_ACTIVE	fifo/src/fifo.c	/^#define CONFIG_COND_ACTIVE /;"	d	file:
 CONFIG_COND_FREE	fifo/src/fifo.c	/^#define CONFIG_COND_FREE /;"	d	file:
@@ -71,7 +72,7 @@ CPP	test/Makefile	/^CPP = @echo " G++ $@"; $(CROSS)g++$/;"	m
 CPP	x264/Makefile	/^CPP = @echo " G++ $@"; $(CROSS_COMPILE)g++$/;"	m
 CPP	x265/Makefile	/^CPP = @echo " G++ $@"; $(CROSS_COMPILE)g++$/;"	m
 CROSS	test/Makefile	/^CROSS =$/;"	m
-CROSS_COMPILE	Makefile	/^	CROSS_COMPILE =\/home\/chenjianping\/gerrit\/nv100\/prebuilts\/gcc\/linux-x86\/aarch64\/gcc-lin/;"	m
+CROSS_COMPILE	Makefile	/^	CROSS_COMPILE =..\/prebuilts\/gcc-linaro-6.3.1-2017.05-x86_64_aarch64-linux-gnu\/bin\/aarch64-l/;"	m
 CROSS_COMPILE	fifo/Makefile	/^CROSS_COMPILE =$/;"	m
 CROSS_COMPILE	rtsp/Makefile	/^CROSS_COMPILE =$/;"	m
 CROSS_COMPILE	v4l2/Makefile	/^CROSS_COMPILE = #arm-linux-$/;"	m
@@ -84,8 +85,11 @@ DEFINE_PARSE_BUILD_LINK_SERVER	rtsp/src/rtsp_msg.c	/^#define DEFINE_PARSE_BUILD_
 FD_SETSIZE	rtsp/inc/comm.h	/^#define FD_SETSIZE /;"	d
 INCLUDES	v4l2/Makefile	/^INCLUDES := -I.\/include -I..\/fifo\/inc$/;"	m
 INVALID_SOCKET	rtsp/src/rtsp_demo.c	/^#define INVALID_SOCKET /;"	d	file:
+IO_METHOD_MMAP	v4l2/capture.c	/^	IO_METHOD_READ, IO_METHOD_MMAP, IO_METHOD_USERPTR,$/;"	e	enum:__anon41adad010103	file:
 IO_METHOD_MMAP	v4l2/src/v4l2.c	/^	IO_METHOD_READ, IO_METHOD_MMAP, IO_METHOD_USERPTR,$/;"	e	enum:__anonb37ccb6c0103	file:
+IO_METHOD_READ	v4l2/capture.c	/^	IO_METHOD_READ, IO_METHOD_MMAP, IO_METHOD_USERPTR,$/;"	e	enum:__anon41adad010103	file:
 IO_METHOD_READ	v4l2/src/v4l2.c	/^	IO_METHOD_READ, IO_METHOD_MMAP, IO_METHOD_USERPTR,$/;"	e	enum:__anonb37ccb6c0103	file:
+IO_METHOD_USERPTR	v4l2/capture.c	/^	IO_METHOD_READ, IO_METHOD_MMAP, IO_METHOD_USERPTR,$/;"	e	enum:__anon41adad010103	file:
 IO_METHOD_USERPTR	v4l2/src/v4l2.c	/^	IO_METHOD_READ, IO_METHOD_MMAP, IO_METHOD_USERPTR,$/;"	e	enum:__anonb37ccb6c0103	file:
 LD	Makefile	/^LD = @echo " LD $@"; $(CROSS_COMPILE)ld$/;"	m
 LD	fifo/Makefile	/^LD = @echo " LD $@"; $(CROSS_COMPILE)ld$/;"	m
@@ -230,7 +234,7 @@ SOCKET	rtsp/src/rtsp_demo.c	/^typedef int SOCKET;$/;"	t	typeref:typename:int	fil
 SOCKET_ERROR	rtsp/src/rtsp_demo.c	/^#define SOCKET_ERROR /;"	d	file:
 SOCKLEN	rtsp/src/rtsp_demo.c	/^typedef int SOCKLEN;$/;"	t	typeref:typename:int	file:
 SOCKLEN	rtsp/src/rtsp_demo.c	/^typedef socklen_t SOCKLEN;$/;"	t	typeref:typename:socklen_t	file:
-SOURCE	v4l2/Makefile	/^SOURCE := $(wildcard *.c src\/*.c)$/;"	m
+SOURCE	v4l2/Makefile	/^SOURCE := $(wildcard src\/*.c)$/;"	m
 SRCS	fifo/Makefile	/^SRCS := $(wildcard src\/*.c)$/;"	m
 SRCS	rtsp/Makefile	/^SRCS := $(wildcard src\/*.c)$/;"	m
 SRCS	test/Makefile	/^SRCS := $(wildcard src\/*.c)$/;"	m
@@ -288,6 +292,7 @@ _TAILQ_HEAD	rtsp/inc/queue.h	/^#define	_TAILQ_HEAD(/;"	d
 __BASE64_SIZE	rtsp/src/utils.c	/^#define __BASE64_SIZE(/;"	d	file:
 __COMM_H__	rtsp/inc/comm.h	/^#define __COMM_H__$/;"	d
 __FIFO_H__	fifo/inc/fifo.h	/^#define __FIFO_H__$/;"	d
+__GX265_H__	x265/inc/gx265.h	/^#define __GX265_H__$/;"	d
 __RB32	rtsp/src/utils.c	/^#define __RB32(/;"	d	file:
 __RTP_ENC_H__	rtsp/inc/rtp_enc.h	/^#define __RTP_ENC_H__$/;"	d
 __RTSP_DEMO_H__	rtsp/inc/rtsp_demo.h	/^#define __RTSP_DEMO_H__$/;"	d
@@ -298,6 +303,7 @@ __UTILS_H__	rtsp/inc/utils.h	/^#define __UTILS_H__$/;"	d
 __alloc_client_connection	rtsp/src/rtsp_demo.c	/^static struct rtsp_client_connection *__alloc_client_connection (struct rtsp_demo *d)$/;"	f	typeref:struct:rtsp_client_connection *	file:
 __alloc_demo	rtsp/src/rtsp_demo.c	/^static struct rtsp_demo *__alloc_demo (void)$/;"	f	typeref:struct:rtsp_demo *	file:
 __alloc_session	rtsp/src/rtsp_demo.c	/^static struct rtsp_session *__alloc_session (struct rtsp_demo *d)$/;"	f	typeref:struct:rtsp_session *	file:
+__anon41adad010103	v4l2/capture.c	/^typedef enum {$/;"	g	file:
 __anonb37ccb6c0103	v4l2/src/v4l2.c	/^typedef enum {$/;"	g	file:
 __anonf7a381d2010a	rtsp/src/rtsp_demo.c	/^	union {$/;"	u	struct:rtsp_session	file:
 __anonf7a381d2020a	rtsp/src/rtsp_demo.c	/^	union {$/;"	u	struct:rtsp_session	file:
@@ -370,7 +376,9 @@ body	rtsp/inc/rtsp_msg.h	/^	rtsp_msg_body_s body;$/;"	m	struct:__rtsp_msg_s	type
 body	rtsp/inc/rtsp_msg.h	/^	void *body;$/;"	m	struct:__rtsp_msg_body_s	typeref:typename:void *
 buf	rtsp/inc/stream_queue.h	/^	char *buf;$/;"	m	struct:stream_queue	typeref:typename:char *
 buffer	fifo/inc/fifo.h	/^	unsigned char *buffer;$/;"	m	struct:sfifo_s	typeref:typename:unsigned char *
+buffer	v4l2/capture.c	/^struct buffer {$/;"	s	file:
 buffer	v4l2/src/v4l2.c	/^struct buffer {$/;"	s	file:
+buffers	v4l2/capture.c	/^struct buffer * buffers = NULL;$/;"	v	typeref:struct:buffer *
 buffers	v4l2/src/v4l2.c	/^struct buffer * buffers = NULL;$/;"	v	typeref:struct:buffer *
 build_simple_sdp	rtsp/src/rtsp_demo.c	/^static int build_simple_sdp (struct rtsp_session *s, const char *uri, char *sdpbuf, int maxlen)$/;"	f	typeref:typename:int	file:
 cc	rtsp/src/rtp_enc.c	/^	uint16_t cc:4;$/;"	m	struct:rtphdr	typeref:typename:uint16_t:4	file:
@@ -384,12 +392,14 @@ clean	v4l2/Makefile	/^clean:  $/;"	t
 clean	x264/Makefile	/^clean:$/;"	t
 clean	x265/Makefile	/^clean:$/;"	t
 client_port	rtsp/inc/rtsp_msg.h	/^	uint16_t client_port;\/\/rtcp is rtp + 1$/;"	m	struct:__rtsp_msg_transport_s	typeref:typename:uint16_t
+close_device	v4l2/capture.c	/^static void close_device(void) {$/;"	f	typeref:typename:void	file:
 close_device	v4l2/src/v4l2.c	/^static void close_device(void) {$/;"	f	typeref:typename:void	file:
 closesocket	rtsp/src/rtsp_demo.c	/^#define closesocket(/;"	d	file:
 codec_data_aac	rtsp/inc/utils.h	/^struct codec_data_aac {$/;"	s
 codec_data_g726	rtsp/inc/utils.h	/^struct codec_data_g726 {$/;"	s
 codec_data_h264	rtsp/inc/utils.h	/^struct codec_data_h264 {$/;"	s
 codec_data_h265	rtsp/inc/utils.h	/^struct codec_data_h265 {$/;"	s
+codec_x265	x265/inc/gx265.h	/^struct codec_x265 {$/;"	s
 cond	fifo/inc/fifo.h	/^	pthread_cond_t cond;$/;"	m	struct:sfifo_list_des_s	typeref:typename:pthread_cond_t
 connections_qhead	rtsp/src/rtsp_demo.c	/^	struct rtsp_client_connection_queue_head connections_qhead;$/;"	m	struct:rtsp_demo	typeref:struct:rtsp_client_connection_queue_head	file:
 connections_qhead	rtsp/src/rtsp_demo.c	/^	struct rtsp_client_connection_queue_head connections_qhead;$/;"	m	struct:rtsp_session	typeref:struct:rtsp_client_connection_queue_head	file:
@@ -399,20 +409,28 @@ create_rtsp_demo	rtsp/src/rtsp_demo.c	/^rtsp_demo_handle create_rtsp_demo(int po
 create_rtsp_session	rtsp/src/rtsp_demo.c	/^rtsp_session_handle create_rtsp_session(rtsp_demo_handle demo, const char *path)$/;"	f	typeref:typename:rtsp_session_handle
 cseq	rtsp/inc/rtsp_msg.h	/^	rtsp_msg_cseq_s *cseq;$/;"	m	struct:__rtsp_msg_hdr_s	typeref:typename:rtsp_msg_cseq_s *
 cseq	rtsp/inc/rtsp_msg.h	/^	uint32_t cseq;$/;"	m	struct:__rtsp_msg_cseq_s	typeref:typename:uint32_t
+csp	x265/inc/gx265.h	/^	int csp;$/;"	m	struct:codec_x265	typeref:typename:int
 cur_size	fifo/inc/fifo.h	/^	unsigned int cur_size;$/;"	m	struct:sfifo_s	typeref:typename:unsigned int
 date	rtsp/inc/rtsp_msg.h	/^	rtsp_msg_date_s *date;$/;"	m	struct:__rtsp_msg_hdr_s	typeref:typename:rtsp_msg_date_s *
 dbg	rtsp/inc/comm.h	/^#define dbg(/;"	d
 dbg_v4l2	fifo/inc/fifo.h	/^#define dbg_v4l2$/;"	d
 demo	rtsp/src/rtsp_demo.c	/^	struct rtsp_demo *demo;$/;"	m	struct:rtsp_client_connection	typeref:struct:rtsp_demo *	file:
 demo	rtsp/src/rtsp_demo.c	/^	struct rtsp_demo *demo;$/;"	m	struct:rtsp_session	typeref:struct:rtsp_demo *	file:
+dev_name	v4l2/capture.c	/^static char * dev_name = NULL;$/;"	v	typeref:typename:char *	file:
 dev_name	v4l2/src/v4l2.c	/^static char * dev_name = NULL;$/;"	v	typeref:typename:char *	file:
 end	rtsp/inc/rtsp_msg.h	/^	} end;$/;"	m	struct:__rtsp_msg_range_s	typeref:union:__rtsp_msg_range_s::__end_u
 err	rtsp/inc/comm.h	/^#define err(/;"	d
+errno_exit	v4l2/capture.c	/^static void errno_exit(const char * s) {$/;"	f	typeref:typename:void	file:
 errno_exit	v4l2/src/v4l2.c	/^static void errno_exit(const char * s) {$/;"	f	typeref:typename:void	file:
+fd	v4l2/capture.c	/^static int fd = -1;$/;"	v	typeref:typename:int	file:
 fd	v4l2/src/v4l2.c	/^static int fd = -1;$/;"	v	typeref:typename:int	file:
+filename	v4l2/capture.c	/^char *filename = "test.yuv\\0";$/;"	v	typeref:typename:char *
 flag_run	test/src/main-native.c	/^static int flag_run = 1;$/;"	v	typeref:typename:int	file:
 flag_run	test/src/main-online.c	/^static int flag_run = 1;$/;"	v	typeref:typename:int	file:
+flag_run_cnt	test/src/main-online.c	/^static int flag_run_cnt = 0;$/;"	v	typeref:typename:int	file:
 flags	rtsp/inc/rtsp_msg.h	/^	uint32_t flags;$/;"	m	struct:__rtsp_msg_transport_s	typeref:typename:uint32_t
+fp	v4l2/capture.c	/^FILE *fp;$/;"	v	typeref:typename:FILE *
+frame_num	x265/inc/gx265.h	/^	int frame_num;$/;"	m	struct:codec_x265	typeref:typename:int
 free_list	fifo/inc/fifo.h	/^	struct sfifo_list_des_s free_list;$/;"	m	struct:sfifo_des_s	typeref:struct:sfifo_list_des_s
 g726	rtsp/src/rtsp_demo.c	/^		struct codec_data_g726 g726;$/;"	m	union:rtsp_session::__anonf7a381d2020a	typeref:struct:codec_data_g726	file:
 gbuf_p1	test/src/main-online.c	/^struct sfifo_des_s *gbuf_p1;$/;"	v	typeref:struct:sfifo_des_s *
@@ -424,17 +442,25 @@ h265	rtsp/src/rtsp_demo.c	/^		struct codec_data_h265 h265;$/;"	m	union:rtsp_sess
 hdrs	rtsp/inc/rtsp_msg.h	/^	rtsp_msg_hdr_s  hdrs;$/;"	m	struct:__rtsp_msg_s	typeref:typename:rtsp_msg_hdr_s
 head	fifo/inc/fifo.h	/^	struct sfifo_s *head;$/;"	m	struct:sfifo_list_des_s	typeref:struct:sfifo_s *
 head	rtsp/inc/stream_queue.h	/^	int head;$/;"	m	struct:stream_queue	typeref:typename:int
+height	x265/inc/gx265.h	/^	int height;$/;"	m	struct:codec_x265	typeref:typename:int
 http_date	rtsp/inc/rtsp_msg.h	/^	char http_date[32];$/;"	m	struct:__rtsp_msg_date_s	typeref:typename:char[32]
+iNal	x265/inc/gx265.h	/^	int iNal;$/;"	m	struct:codec_x265	typeref:typename:int
 info	rtsp/inc/comm.h	/^#define info(/;"	d
 info_array	rtsp/inc/rtsp_msg.h	/^	rtsp_msg_rtp_subinfo_s **info_array;$/;"	m	struct:__rtsp_msg_rtp_info_s	typeref:typename:rtsp_msg_rtp_subinfo_s **
+init_device	v4l2/capture.c	/^static void init_device(void) {$/;"	f	typeref:typename:void	file:
 init_device	v4l2/src/v4l2.c	/^static void init_device(void) {$/;"	f	typeref:typename:void	file:
+init_mmap	v4l2/capture.c	/^static void init_mmap(void) {$/;"	f	typeref:typename:void	file:
 init_mmap	v4l2/src/v4l2.c	/^static void init_mmap(void) {$/;"	f	typeref:typename:void	file:
+init_read	v4l2/capture.c	/^static void init_read(unsigned int buffer_size) {$/;"	f	typeref:typename:void	file:
 init_read	v4l2/src/v4l2.c	/^static void init_read(unsigned int buffer_size) {$/;"	f	typeref:typename:void	file:
+init_userp	v4l2/capture.c	/^static void init_userp(unsigned int buffer_size) {$/;"	f	typeref:typename:void	file:
 init_userp	v4l2/src/v4l2.c	/^static void init_userp(unsigned int buffer_size) {$/;"	f	typeref:typename:void	file:
 interleaved	rtsp/inc/rtsp_msg.h	/^	uint8_t interleaved;$/;"	m	struct:__rtsp_msg_transport_s	typeref:typename:uint8_t
 interline	rtsp/inc/rtsp_msg.h	/^		rtsp_msg_interleaved_line_s interline;$/;"	m	union:__rtsp_msg_hdr_s::__start_line_u	typeref:typename:rtsp_msg_interleaved_line_s
 intval	rtsp/src/rtsp_msg.c	/^	int intval;$/;"	m	struct:__rtsp_msg_int2str_tbl_s	typeref:typename:int	file:
+io	v4l2/capture.c	/^static io_method io = IO_METHOD_MMAP;$/;"	v	typeref:typename:io_method	file:
 io	v4l2/src/v4l2.c	/^static io_method io = IO_METHOD_MMAP;$/;"	v	typeref:typename:io_method	file:
+io_method	v4l2/capture.c	/^} io_method;$/;"	t	typeref:enum:__anon41adad010103	file:
 io_method	v4l2/src/v4l2.c	/^} io_method;$/;"	t	typeref:enum:__anonb37ccb6c0103	file:
 ipaddr	rtsp/inc/rtsp_msg.h	/^	char ipaddr[32];$/;"	m	struct:__rtsp_msg_uri_s	typeref:typename:char[32]
 is_over_tcp	rtsp/src/rtsp_demo.c	/^	int is_over_tcp;$/;"	m	struct:rtp_connection	typeref:typename:int	file:
@@ -442,13 +468,18 @@ isseq	rtsp/inc/rtsp_msg.h	/^	uint32_t isseq;$/;"	m	struct:__rtsp_msg_rtp_subinfo
 length	rtsp/inc/rtsp_msg.h	/^	uint16_t length;$/;"	m	struct:__rtsp_msg_interleaved_line_s	typeref:typename:uint16_t
 length	rtsp/inc/rtsp_msg.h	/^	uint32_t length;$/;"	m	struct:__rtsp_msg_content_length_s	typeref:typename:uint32_t
 length	rtsp/src/rtsp_demo.c	/^	uint16_t length;$/;"	m	struct:rtcp_sr	typeref:typename:uint16_t	file:
+length	v4l2/capture.c	/^	size_t length;$/;"	m	struct:buffer	typeref:typename:size_t	file:
 length	v4l2/src/v4l2.c	/^	size_t length;$/;"	m	struct:buffer	typeref:typename:size_t	file:
+long_options	v4l2/capture.c	/^static const struct option long_options[] = {$/;"	v	typeref:typename:const struct option[]	file:
 m	rtsp/src/rtp_enc.c	/^	uint16_t m:1;$/;"	m	struct:rtphdr	typeref:typename:uint16_t:1	file:
 main	test/src/main-native.c	/^int main(int argc, char *argv[])$/;"	f	typeref:typename:int
 main	test/src/main-online.c	/^int main(int argc, char *argv[])$/;"	f	typeref:typename:int
+main	v4l2/capture.c	/^int main(int argc, char ** argv) {$/;"	f	typeref:typename:int
+mainloop	v4l2/capture.c	/^static void mainloop(void) {$/;"	f	typeref:typename:void	file:
 make_cross	Makefile	/^make_cross=1$/;"	m
 method	rtsp/inc/rtsp_msg.h	/^	rtsp_msg_method_e method;$/;"	m	struct:__rtsp_msg_request_line_s	typeref:typename:rtsp_msg_method_e
 mutex	fifo/inc/fifo.h	/^	pthread_mutex_t mutex;$/;"	m	struct:sfifo_list_des_s	typeref:typename:pthread_mutex_t
+n_buffers	v4l2/capture.c	/^static unsigned int n_buffers = 0;$/;"	v	typeref:typename:unsigned int	file:
 n_buffers	v4l2/src/v4l2.c	/^static unsigned int n_buffers = 0;$/;"	v	typeref:typename:unsigned int	file:
 nbpkts	rtsp/inc/stream_queue.h	/^	int nbpkts;$/;"	m	struct:stream_queue	typeref:typename:int
 next	fifo/inc/fifo.h	/^	struct sfifo_s *next;$/;"	m	struct:sfifo_s	typeref:struct:sfifo_s *
@@ -458,9 +489,14 @@ npt	rtsp/inc/rtsp_msg.h	/^		rtsp_msg_time_npt_s npt;$/;"	m	union:__rtsp_msg_rang
 ntpts_lsw	rtsp/src/rtsp_demo.c	/^	uint32_t ntpts_lsw;$/;"	m	struct:rtcp_sr	typeref:typename:uint32_t	file:
 ntpts_msw	rtsp/src/rtsp_demo.c	/^	uint32_t ntpts_msw;$/;"	m	struct:rtcp_sr	typeref:typename:uint32_t	file:
 octet_count	rtsp/src/rtsp_demo.c	/^	uint32_t octet_count;$/;"	m	struct:rtcp_sr	typeref:typename:uint32_t	file:
-open_device	v4l2/src/v4l2.c	/^static void open_device(void) {$/;"	f	typeref:typename:void	file:
+open_device	v4l2/capture.c	/^static void open_device(void) {$/;"	f	typeref:typename:void	file:
+open_device	v4l2/src/v4l2.c	/^static int open_device(void) {$/;"	f	typeref:typename:int	file:
 p	rtsp/src/rtp_enc.c	/^	uint16_t p:1;$/;"	m	struct:rtphdr	typeref:typename:uint16_t:1	file:
 p	rtsp/src/rtsp_demo.c	/^	uint16_t p:1;$/;"	m	struct:rtcp_sr	typeref:typename:uint16_t:1	file:
+pHandle	x265/inc/gx265.h	/^	x265_encoder* pHandle;$/;"	m	struct:codec_x265	typeref:typename:x265_encoder *
+pNals	x265/inc/gx265.h	/^	x265_nal *pNals;$/;"	m	struct:codec_x265	typeref:typename:x265_nal *
+pParam	x265/inc/gx265.h	/^	x265_param* pParam;$/;"	m	struct:codec_x265	typeref:typename:x265_param *
+pPic_in	x265/inc/gx265.h	/^	x265_picture *pPic_in;$/;"	m	struct:codec_x265	typeref:typename:x265_picture *
 packet_count	rtsp/src/rtsp_demo.c	/^	uint32_t packet_count;$/;"	m	struct:rtcp_sr	typeref:typename:uint32_t	file:
 param	rtsp/inc/rtsp_msg.h	/^	} param;$/;"	m	struct:__rtsp_msg_rtp_subinfo_s	typeref:union:__rtsp_msg_rtp_subinfo_s::__param_u
 parser	rtsp/src/rtsp_msg.c	/^	rtsp_msg_line_parser parser;$/;"	m	struct:__rtsp_msg_str2parser_tbl_s	typeref:typename:rtsp_msg_line_parser	file:
@@ -474,6 +510,7 @@ pps	rtsp/inc/utils.h	/^	uint8_t pps[64];$/;"	m	struct:codec_data_h264	typeref:ty
 pps	rtsp/inc/utils.h	/^	uint8_t pps[64];$/;"	m	struct:codec_data_h265	typeref:typename:uint8_t[64]
 pps_len	rtsp/inc/utils.h	/^	uint32_t pps_len;$/;"	m	struct:codec_data_h264	typeref:typename:uint32_t
 pps_len	rtsp/inc/utils.h	/^	uint32_t pps_len;$/;"	m	struct:codec_data_h265	typeref:typename:uint32_t
+process_image	v4l2/capture.c	/^static void process_image(const void * p, int size) {$/;"	f	typeref:typename:void	file:
 pt	rtsp/inc/rtp_enc.h	/^	uint8_t  pt;$/;"	m	struct:__rtp_enc	typeref:typename:uint8_t
 pt	rtsp/src/rtp_enc.c	/^	uint16_t pt:7;$/;"	m	struct:rtphdr	typeref:typename:uint16_t:7	file:
 pt	rtsp/src/rtsp_demo.c	/^	uint16_t pt:8;$/;"	m	struct:rtcp_sr	typeref:typename:uint16_t:8	file:
@@ -481,6 +518,8 @@ public_	rtsp/inc/rtsp_msg.h	/^	rtsp_msg_public_s *public_;$/;"	m	struct:__rtsp_m
 public_	rtsp/inc/rtsp_msg.h	/^	uint32_t public_;$/;"	m	struct:__rtsp_msg_public_s	typeref:typename:uint32_t
 range	rtsp/inc/rtsp_msg.h	/^	rtsp_msg_range_s *range;$/;"	m	struct:__rtsp_msg_hdr_s	typeref:typename:rtsp_msg_range_s *
 rc	rtsp/src/rtsp_demo.c	/^	uint16_t rc:5;$/;"	m	struct:rtcp_sr	typeref:typename:uint16_t:5	file:
+read_frame	v4l2/capture.c	/^static int read_frame(void) {$/;"	f	typeref:typename:int	file:
+read_frame	v4l2/src/v4l2.c	/^int read_frame(struct sfifo_s *sfifo) {$/;"	f	typeref:typename:int
 reqbuf	rtsp/src/rtsp_demo.c	/^	char reqbuf[1024];$/;"	m	struct:rtsp_client_connection	typeref:typename:char[1024]	file:
 reqlen	rtsp/src/rtsp_demo.c	/^	int  reqlen;$/;"	m	struct:rtsp_client_connection	typeref:typename:int	file:
 reqline	rtsp/inc/rtsp_msg.h	/^		rtsp_msg_request_line_s reqline;$/;"	m	union:__rtsp_msg_hdr_s::__start_line_u	typeref:typename:rtsp_msg_request_line_s
@@ -674,6 +713,7 @@ sfifo_list_des_s	fifo/inc/fifo.h	/^struct sfifo_list_des_s {$/;"	s
 sfifo_put_active_buf	fifo/src/fifo.c	/^int sfifo_put_active_buf(struct sfifo_s *sfifo, struct sfifo_des_s *sfifo_des_p)$/;"	f	typeref:typename:int
 sfifo_put_free_buf	fifo/src/fifo.c	/^int sfifo_put_free_buf(struct sfifo_s *sfifo, struct sfifo_des_s *sfifo_des_p)$/;"	f	typeref:typename:int
 sfifo_s	fifo/inc/fifo.h	/^struct sfifo_s {$/;"	s
+short_options	v4l2/capture.c	/^static const char short_options[] = "d:hmru";$/;"	v	typeref:typename:const char[]	file:
 sig_proc	test/src/main-native.c	/^static void sig_proc(int signo)$/;"	f	typeref:typename:void	file:
 sig_proc	test/src/main-online.c	/^static void sig_proc(int signo)$/;"	f	typeref:typename:void	file:
 size	fifo/inc/fifo.h	/^	unsigned int size;$/;"	m	struct:sfifo_s	typeref:typename:unsigned int
@@ -694,11 +734,14 @@ ssrc	rtsp/src/rtp_enc.c	/^	uint32_t ssrc;$/;"	m	struct:rtphdr	typeref:typename:u
 ssrc	rtsp/src/rtsp_demo.c	/^	uint32_t ssrc;$/;"	m	struct:rtcp_sr	typeref:typename:uint32_t	file:
 ssrc	rtsp/src/rtsp_demo.c	/^	uint32_t ssrc;$/;"	m	struct:rtp_connection	typeref:typename:uint32_t	file:
 start	rtsp/inc/rtsp_msg.h	/^	} start;$/;"	m	struct:__rtsp_msg_range_s	typeref:union:__rtsp_msg_range_s::__start_u
+start	v4l2/capture.c	/^	void * start;$/;"	m	struct:buffer	typeref:typename:void *	file:
 start	v4l2/src/v4l2.c	/^	void * start;$/;"	m	struct:buffer	typeref:typename:void *	file:
+start_capturing	v4l2/capture.c	/^static void start_capturing(void) {$/;"	f	typeref:typename:void	file:
 start_capturing	v4l2/src/v4l2.c	/^static void start_capturing(void) {$/;"	f	typeref:typename:void	file:
 startline	rtsp/inc/rtsp_msg.h	/^	} startline;$/;"	m	struct:__rtsp_msg_hdr_s	typeref:union:__rtsp_msg_hdr_s::__start_line_u
 state	rtsp/src/rtsp_demo.c	/^	int state;	\/\/session state$/;"	m	struct:rtsp_client_connection	typeref:typename:int	file:
 status_code	rtsp/inc/rtsp_msg.h	/^	uint32_t status_code;$/;"	m	struct:__rtsp_msg_response_line_s	typeref:typename:uint32_t
+stop_capturing	v4l2/capture.c	/^static void stop_capturing(void) {$/;"	f	typeref:typename:void	file:
 stop_capturing	v4l2/src/v4l2.c	/^static void stop_capturing(void) {$/;"	f	typeref:typename:void	file:
 stream_queue	rtsp/inc/stream_queue.h	/^struct stream_queue {$/;"	s
 streamq_alloc	rtsp/src/stream_queue.c	/^struct stream_queue *streamq_alloc (int pktsiz, int nbpkts)$/;"	f	typeref:struct:stream_queue *
@@ -729,9 +772,11 @@ type	rtsp/inc/rtsp_msg.h	/^	rtsp_msg_type_e type;$/;"	m	struct:__rtsp_msg_s	type
 udp_localport	rtsp/src/rtsp_demo.c	/^	uint16_t udp_localport[2]; \/\/if is_over_tcp=0. [0] is rtp local port, [1] is rtcp local port$/;"	m	struct:rtp_connection	typeref:typename:uint16_t[2]	file:
 udp_peerport	rtsp/src/rtsp_demo.c	/^	uint16_t udp_peerport[2]; \/\/if is_over_tcp=0. [0] is rtp peer port, [1] is rtcp peer port$/;"	m	struct:rtp_connection	typeref:typename:uint16_t[2]	file:
 udp_sockfd	rtsp/src/rtsp_demo.c	/^    SOCKET udp_sockfd[2]; \/\/if is_over_tcp=0. [0] is rtp socket, [1] is rtcp socket$/;"	m	struct:rtp_connection	typeref:typename:SOCKET[2]	file:
+uninit_device	v4l2/capture.c	/^static void uninit_device(void) {$/;"	f	typeref:typename:void	file:
 uninit_device	v4l2/src/v4l2.c	/^static void uninit_device(void) {$/;"	f	typeref:typename:void	file:
 uri	rtsp/inc/rtsp_msg.h	/^	rtsp_msg_uri_s    uri;$/;"	m	struct:__rtsp_msg_request_line_s	typeref:typename:rtsp_msg_uri_s
 url	rtsp/inc/rtsp_msg.h	/^	rtsp_msg_uri_s url;$/;"	m	struct:__rtsp_msg_rtp_subinfo_s	typeref:typename:rtsp_msg_uri_s
+usage	v4l2/capture.c	/^static void usage(FILE * fp, int argc, char ** argv) {$/;"	f	typeref:typename:void	file:
 usecords	rtsp/inc/rtsp_msg.h	/^	uint32_t usecords;	\/\/45$/;"	m	struct:__rtsp_msg_time_npt_s	typeref:typename:uint32_t
 usecords	rtsp/inc/rtsp_msg.h	/^	uint32_t usecords; \/\/25 $/;"	m	struct:__rtsp_msg_time_utc_s	typeref:typename:uint32_t
 user_agent	rtsp/inc/rtsp_msg.h	/^	char user_agent[64];$/;"	m	struct:__rtsp_msg_user_agent_s	typeref:typename:char[64]
@@ -742,8 +787,8 @@ utc	rtsp/inc/rtsp_msg.h	/^		rtsp_msg_time_utc_s utc;$/;"	m	union:__rtsp_msg_rang
 v	rtsp/src/rtp_enc.c	/^	uint16_t v:2;$/;"	m	struct:rtphdr	typeref:typename:uint16_t:2	file:
 v	rtsp/src/rtsp_demo.c	/^	uint16_t v:2;$/;"	m	struct:rtcp_sr	typeref:typename:uint16_t:2	file:
 v4l2	test/src/main-online.c	/^pthread_t v4l2;$/;"	v	typeref:typename:pthread_t
+v4l2_capture	v4l2/src/v4l2.c	/^void v4l2_capture(struct sfifo_des_s *gbuf) {$/;"	f	typeref:typename:void
 v4l2_exit	v4l2/src/v4l2.c	/^void v4l2_exit(void) {$/;"	f	typeref:typename:void
-v4l2_get_yuv	v4l2/src/v4l2.c	/^void v4l2_get_yuv(struct sfifo_des_s *gbuf) {$/;"	f	typeref:typename:void
 v4l2_init	v4l2/src/v4l2.c	/^void v4l2_init(void) {$/;"	f	typeref:typename:void
 v4l2_thread	test/src/main-online.c	/^void *v4l2_thread(void *args)$/;"	f	typeref:typename:void *
 vcodec_data	rtsp/src/rtsp_demo.c	/^	} vcodec_data;$/;"	m	struct:rtsp_session	typeref:union:rtsp_session::__anonf7a381d2010a	file:
@@ -757,11 +802,16 @@ vrtp	rtsp/src/rtsp_demo.c	/^	struct rtp_connection *vrtp;$/;"	m	struct:rtsp_clie
 vrtpe	rtsp/src/rtsp_demo.c	/^	rtp_enc vrtpe;$/;"	m	struct:rtsp_session	typeref:typename:rtp_enc	file:
 vstreamq	rtsp/src/rtsp_demo.c	/^	struct stream_queue *vstreamq;$/;"	m	struct:rtsp_session	typeref:struct:stream_queue *	file:
 warn	rtsp/inc/comm.h	/^#define warn(/;"	d
+width	x265/inc/gx265.h	/^	int width;$/;"	m	struct:codec_x265	typeref:typename:int
 x	rtsp/src/rtp_enc.c	/^	uint16_t x:1;$/;"	m	struct:rtphdr	typeref:typename:uint16_t:1	file:
 x264_venc	x264/src/x264.c	/^int x264_venc(struct sfifo_des_s *gbuf_p1, struct sfifo_des_s *gbuf_p2)$/;"	f	typeref:typename:int
 x265	test/src/main-online.c	/^pthread_t x265;$/;"	v	typeref:typename:pthread_t
 x265_thread	test/src/main-online.c	/^void *x265_thread(void *args)$/;"	f	typeref:typename:void *
-x265_venc	x265/src/x265.c	/^int x265_venc(struct sfifo_des_s *gbuf_p1, struct sfifo_des_s *gbuf_p2)$/;"	f	typeref:typename:int
-xioctl	v4l2/src/v4l2.c	/^static int xioctl(int fd, int request, void * arg) {$/;"	f	typeref:typename:int	file:
-xread_frame	v4l2/src/v4l2.c	/^static int xread_frame(struct sfifo_s *sfifo) {$/;"	f	typeref:typename:int	file:
+x265_venc	x265/src/x265.c	/^int x265_venc(struct codec_x265 *c, struct sfifo_des_s *gbuf_p1, struct sfifo_des_s *gbuf_p2)$/;"	f	typeref:typename:int
+x265_venc_exit	x265/src/x265.c	/^int x265_venc_exit(struct codec_x265 *c)$/;"	f	typeref:typename:int
+x265_venc_init	x265/src/x265.c	/^int x265_venc_init(struct codec_x265 *c)$/;"	f	typeref:typename:int
+xbuf	x265/inc/gx265.h	/^	unsigned char *xbuf;$/;"	m	struct:codec_x265	typeref:typename:unsigned char *
+xioctl	v4l2/capture.c	/^static int xioctl(int fd, int request, void * arg) {$/;"	f	typeref:typename:int	file:
+xioctl	v4l2/src/v4l2.c	/^int xioctl(int fd, int request, void * arg) {$/;"	f	typeref:typename:int
+y_size	x265/inc/gx265.h	/^	int y_size;$/;"	m	struct:codec_x265	typeref:typename:int
 yuyv_to_yuv420P	v4l2/src/v4l2.c	/^void yuyv_to_yuv420P(unsigned char *in, unsigned char *out, int width, int height)  $/;"	f	typeref:typename:void

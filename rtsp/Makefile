@@ -1,7 +1,7 @@
 make_cross=1
 
 ifdef make_cross
-	CROSS_COMPILE =/home/chenjianping/gerrit/nv100/prebuilts/gcc/linux-x86/aarch64/gcc-linaro-6.3.1-2017.05-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu-
+	CROSS_COMPILE =../prebuilts/gcc-linaro-6.3.1-2017.05-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu-
 endif
 
 CC = @echo " GCC $@"; $(CROSS_COMPILE)gcc
@@ -26,6 +26,7 @@ CFLAGS += -g -c -Wall -D__LINUX__
 
 CFLAGS += -I./fifo/inc
 CFLAGS += -I./rtsp/inc
+CFLAGS += -I./x265/inc
 ifdef make_cross
 	CFLAGS += -I../x264/_install_cross/include
 	CFLAGS += -I../x265/_install_cross/include

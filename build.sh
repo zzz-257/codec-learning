@@ -6,14 +6,11 @@ if [ $# -ne 2 ];then
 	exit
 fi
 
+start=$(date +%s)
+
 #0
 mk_make=$1
 mk_build=$2
-
-if [ ${mk_make} -eq 1 ];then
-	export PATH=$PATH:/home/chenjianping/gerrit/nv100/prebuilts/gcc/linux-x86/aarch64/gcc-linaro-6.3.1-2017.05-x86_64_aarch64-linux-gnu/bin
-	CROSS_COMPILE=/home/chenjianping/gerrit/nv100/prebuilts/gcc/linux-x86/aarch64/gcc-linaro-6.3.1-2017.05-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu-
-fi
 
 if [ ${mk_build} -eq 1 ];then
 
@@ -22,13 +19,13 @@ if [ ${mk_build} -eq 1 ];then
 	mk_x264=1
 	mk_x265=1
 	mk_ffmpeg=1
-	mk_test=0
+	mk_test=1
 	rm -rfv  cmake nasm x264 x265 ffmpeg
 else
 	mk_cmake=0
 	mk_nasm=0
 	mk_x264=1
-	mk_x265=1
+	mk_x265=0
 	mk_ffmpeg=0
 	mk_test=0
 	rm -rfv test/lib/* test/inc/*
@@ -46,6 +43,7 @@ if [ ${mk_build} -eq 1 ];then
 	#wget https://download.videolan.org/videolan/x264/snapshots/x264-snapshot-20191217-2245.tar.bz2 --no-check-certificate
 	#wget https://download.videolan.org/videolan/x265/x265_3.2.1.tar.gz --no-check-certificate
 	#wget https://ffmpeg.org/releases/ffmpeg-snapshot.tar.bz2 --no-check-certificate
+	#wget https://releases.linaro.org/components/toolchain/binaries/6.3-2017.05/aarch64-linux-gnu/gcc-linaro-6.3.1-2017.05-x86_64_aarch64-linux-gnu.tar.xz
 
 	tar xvf tar/cmake-3.25.0-rc2.tar.gz
 	tar xvf tar/nasm-2.15.tar.gz
@@ -63,7 +61,20 @@ if [ ${mk_build} -eq 1 ];then
 	rm -rf $(pwd)/nasm/_install
 
 	mkdir -p test/lib test/inc test/yuv
+
+#	tar xvf tar/gcc-linaro-6.3.1-2017.05-x86_64_aarch64-linux-gnu.tar.xz
+#	mkdir prebuilts
+#	mv gcc-linaro-6.3.1-2017.05-x86_64_aarch64-linux-gnu prebuilts/
 fi
+
+mk_prebuilts=$(pwd)/prebuilts/gcc-linaro-6.3.1-2017.05-x86_64_aarch64-linux-gnu/bin
+
+if [ ${mk_make} -eq 1 ];then
+	export PATH=$PATH:$mk_prebuilts
+#	CROSS_COMPILE=/home/chenjianping/others/codec-learning/prebuilts/gcc-linaro-6.3.1-2017.05-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu-
+	CROSS_COMPILE=$mk_prebuilts/aarch64-linux-gnu-
+fi
+
 
 if [ ${mk_x264} -eq 1 ];then
 	rm -rf $(pwd)/x264/$_install
@@ -181,16 +192,15 @@ fi
 if [ ${mk_ffmpeg} -eq 1 ];then
 
 	cd ffmpeg
-	export PKG_CONFIG_PATH=${PATH_PKG_X264}:${PATH_PKG_X265}
+	export PKG_CONFIG_PATH=${PATH_PKG_X264}
 	export PATH=$PATH:${PATH_NASM}
 	#default --enable-static --disable-shared
 	#otherwise, --disable-static --enable-shared
 	./configure --prefix=${install_ffmpeg} \
 		--enable-gpl \
 		--enable-libx264 \
-		--enable-libx265 \
-		--extra-cflags="-I${PATH_INC_X264} -I${PATH_INC_X265}" \
-		--extra-ldflags="-L${PATH_LIB_X264} -L${PATH_LIB_X265}"	#--pkg-config=false
+		--extra-cflags="-I${PATH_INC_X264}" \
+		--extra-ldflags="-L${PATH_LIB_X264}"
 	rm -rf $install_ffmpeg/*
 	do_make
 	cp -rfv ${PATH_INC_FFMPEG}* $test_inc
@@ -204,3 +214,12 @@ if [ ${mk_test} -eq 1 ];then
 	./venctest
 	cd $cur
 fi
+
+end=$(date +%s)
+take=$(( end - start ))
+
+take_min=$((take/60))
+take_sec=$((take%60))
+
+echo Time taken to execute commands is ${take_min} min  ${take_sec} seconds.
+echo ""

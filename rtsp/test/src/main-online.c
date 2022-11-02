@@ -8,14 +8,17 @@
 #include <assert.h>
 #include <pthread.h>
 #include <signal.h>
+#include <errno.h>
 
 #include "comm.h"
 #include "x265.h"
+#include "gx265.h"
 #include "x264.h"
 #include "fifo.h"
 #include "rtsp_demo.h"
 
 static int flag_run = 1;
+static int flag_run_cnt = 0;
 
 static void sig_proc(int signo)
 {
@@ -32,32 +35,43 @@ struct sfifo_des_s *gbuf_p1;
 
 extern void v4l2_init(void);
 extern void v4l2_exit(void);
-extern void v4l2_get_yuv(struct sfifo_des_s *gbuf);
+extern void v4l2_capture(struct sfifo_des_s *gbuf);
+
 void *v4l2_thread(void *args)
 {
 	v4l2_init();
 	while (flag_run) {
 
-		v4l2_get_yuv(gbuf_p1);
+		v4l2_capture(gbuf_p1);
 	}
 	v4l2_exit();
-	printf("%s[%d]\n",__func__,__LINE__);
+	flag_run_cnt++;
 	return 0;
 }
 
-
 extern void yuyv_to_yuv420P(unsigned char *in, unsigned char *out, int width, int height);
-extern int x265_venc(struct sfifo_des_s *gbuf_p1, struct sfifo_des_s *gbuf_p2);
 extern int x264_venc(struct sfifo_des_s *gbuf_p1, struct sfifo_des_s *gbuf_p2);
+extern int x265_venc_init(struct codec_x265 *c);
+extern int x265_venc_exit(struct codec_x265 *c);
+extern int x265_venc(struct codec_x265 *c, struct sfifo_des_s *gbuf_p1, struct sfifo_des_s *gbuf_p2);
 
 void *x265_thread(void *args)
 {
+	struct codec_x265 codec, *c;
+
+	x265_venc_init(&codec);
+
+	c = &codec;
+
 	while (flag_run) {
 
-		//	x264_venc(gbuf_p1, gbuf_p2);
-		x265_venc(gbuf_p1, gbuf_p2);
+		x265_venc(c, gbuf_p1, gbuf_p2);
 	}
-	printf("%s[%d]\n",__func__,__LINE__);
+
+	x265_venc_exit(&codec);
+
+	flag_run_cnt++;
+
 	return 0;
 }
 
@@ -72,13 +86,13 @@ void *rtsp_thread(void *args)
 	demo = rtsp_new_demo(10554);//rtsp sever socket
 	if (NULL == demo) {
 		printf("rtsp_new_demo failed\n");
-		//	return 0;
+		return 0;
 	}
 
 	session = rtsp_new_session(demo, "/live");//¶ÔÓ¦rtsp session 
 	if (NULL == session) {
 		printf("rtsp_new_session failed\n");
-		//	return 0;
+		return 0;
 	}
 
 	int codec_id = RTSP_CODEC_ID_VIDEO_H265;
@@ -121,7 +135,7 @@ read_video_again:
 					type = vbuf[4]>>1 & 0x3f;
 			}
 
-			printf("%s[%d] type: %d \n",__func__,__LINE__, type);
+			//	printf("%s[%d] type: %d \n",__func__,__LINE__, type);
 
 			if(codec_id==RTSP_CODEC_ID_VIDEO_H264)
 			{
@@ -144,7 +158,6 @@ read_video_again:
 		}
 		else
 		{
-			printf("%s[%d] ####################################\n",__func__,__LINE__);
 			sfifo_put_free_buf(bs, gbuf_p2);
 			goto read_video_again;
 		}
@@ -168,7 +181,7 @@ read_video_again:
 		rtsp_del_session(session);
 
 	rtsp_del_demo(demo);
-	printf("%s[%d]\n",__func__,__LINE__);
+	flag_run_cnt++;
 	return 0;
 }
 
@@ -192,15 +205,17 @@ int main(int argc, char *argv[])
 	/*pthread rtsp init*/
 	pthread_create(&rtsp,NULL,rtsp_thread,NULL);
 
-	pthread_join(rtsp,NULL);printf("%s[%d] rtsp exit\n",__func__,__LINE__);
-	pthread_join(x265,NULL);printf("%s[%d] x265 exit\n",__func__,__LINE__);
-	pthread_join(v4l2,NULL);printf("%s[%d] v4l2 exit\n",__func__,__LINE__);
+	while(flag_run_cnt!=3)
+	{
+		sleep(1);
+	}
 
 	/*fifo gbuf_p2 exit*/
 	free(gbuf_p2);
 	/*fifo gbuf_p1 exit*/
 	free(gbuf_p1);
 
-	printf("%s[%d]\n",__func__,__LINE__);
+	printf("%s[%d] exit\n",__func__,__LINE__);
+
 	return 0;
 }

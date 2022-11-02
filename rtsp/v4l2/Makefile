@@ -8,7 +8,7 @@ AR = $(CROSS_COMPILE)ar
 
 all:$(STATIC_NAME) #$(SHARE_NAME)
 
-SOURCE := $(wildcard *.c src/*.c)
+SOURCE := $(wildcard src/*.c)
 
 OBJ := $(patsubst %.c, %.o, $(SOURCE))
 

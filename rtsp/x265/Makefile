@@ -13,6 +13,7 @@ SRCS := $(wildcard src/*.c)
 OBJS := $(patsubst %.c, %.o, $(SRCS))
 
 CFLAGS += -g -O0 -Wall
+CFLAGS += -I./inc
 CFLAGS += -I../fifo/inc
 CFLAGS += -I/home/chenjianping/others/codec-learning/x265/_install/include
 LDFLAGS += -L/home/chenjianping/others/codec-learning/x265/_install/lib -lx265 -lpthread

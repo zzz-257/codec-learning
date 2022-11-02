@@ -1,147 +1,133 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <assert.h>
 #include <errno.h>
 
 #include "x265.h"
+#include "gx265.h"
 
 #include "fifo.h"
 
 extern void yuyv_to_yuv420P(unsigned char *in, unsigned char *out, int width, int height);
 
-int x265_venc(struct sfifo_des_s *gbuf_p1, struct sfifo_des_s *gbuf_p2)
+int x265_venc_init(struct codec_x265 *c)
 {
-	static unsigned int cnt=0;
-	int i,j;
-	int y_size;
-	char *buff=NULL;
-	int ret;
-	x265_nal *pNals=NULL;
-	uint32_t iNal=0;
+	c->pNals = NULL;
+	c->iNal = 0;
 
-	x265_param* pParam=NULL;
-	x265_encoder* pHandle=NULL;
-	x265_picture *pPic_in=NULL;
+	c->pParam = NULL;
+	c->pHandle = NULL;
+	c->pPic_in = NULL;
 
-	//Encode 50 frame
-	//if set 0, encode all frame
-	int frame_num=0;
-	int csp=X265_CSP_I420;
-	int width=640,height=360;
+	c->frame_num = 0;
+	c->csp = X265_CSP_I420;
+	c->width = 640;
+	c->height = 360;
 
-	pParam=x265_param_alloc();
-	x265_param_default(pParam);
-	pParam->bRepeatHeaders=1;//write sps,pps before keyframe
-	pParam->internalCsp=csp;
-	pParam->sourceWidth=width;
-	pParam->sourceHeight=height;
-	pParam->fpsNum=25;
-	pParam->fpsDenom=1;
+	c->pParam = x265_param_alloc();
+	x265_param_default(c->pParam);
+	c->pParam->bRepeatHeaders = 1;//write sps,pps before keyframe
+	c->pParam->internalCsp = c->csp;
+	c->pParam->sourceWidth = c->width;
+	c->pParam->sourceHeight = c->height;
+	c->pParam->fpsNum = 25;
+	c->pParam->fpsDenom = 1;
 	{
 		/*log close*/
-		pParam->logLevel=0;
+		c->pParam->logLevel = 0;
 		/*sei close*/
-		pParam->bEmitInfoSEI=0;
+		c->pParam->bEmitInfoSEI = 0;
 		/*gop set*/
-		pParam->keyframeMax=10;
+		c->pParam->keyframeMax = 8;
 		/*b frame close*/
-		pParam->bframes=0;
+		c->pParam->bframes = 0;
 		/*first gop slice IDR set*/
-		pParam->bOpenGOP=0;
-#if 1
+		c->pParam->bOpenGOP = 0;
 		/*sao*/
-		pParam->bEnableSAO=1;
+		c->pParam->bEnableSAO = 1;
 		/*qp*/
-		pParam->bOptQpPPS=25;
-
+		c->pParam->bOptQpPPS = 25;
 		/*rc*/
-		pParam->rc.qp=25;
-		pParam->rc.qpMin=15;
-		pParam->rc.qpMax=35;
-#endif
+		c->pParam->rc.qp = 25;
+		c->pParam->rc.qpMin = 15;
+		c->pParam->rc.qpMax = 35;
 	}
 
-	//Init
-	pHandle=x265_encoder_open(pParam);
+	c->pHandle = x265_encoder_open(c->pParam);
 
-	if(pHandle==NULL)
+	if(c->pHandle == NULL)
 	{
 		printf("x265_encoder_open err\n");
 		return 0;
 	}
 
-	y_size = pParam->sourceWidth * pParam->sourceHeight;
+	c->y_size = c->width * c->height;
 
-	pPic_in = x265_picture_alloc();
-	x265_picture_init(pParam,pPic_in);
+	c->pPic_in = x265_picture_alloc();
 
-	pPic_in->stride[0]=width;
-	pPic_in->stride[1]=width/2;
-	pPic_in->stride[2]=width/2;
+	x265_picture_init(c->pParam, c->pPic_in);
 
+	c->pPic_in->stride[0] = c->width;
+	c->pPic_in->stride[1] = c->width/2;
+	c->pPic_in->stride[2] = c->width/2;
+
+	c->xbuf = (unsigned char *)malloc(c->y_size*3/2);
+
+	return 0;
+}
+
+int x265_venc_exit(struct codec_x265 *c)
+{
+	free(c->xbuf);
+
+	x265_encoder_close(c->pHandle);
+	x265_picture_free(c->pPic_in);
+	x265_param_free(c->pParam);
+
+	return 0;
+}
+
+int x265_venc(struct codec_x265 *c, struct sfifo_des_s *gbuf_p1, struct sfifo_des_s *gbuf_p2)
+{
+	static unsigned int cnt=0;
+	int j;
 	struct sfifo_s *yuv;
 	struct sfifo_s *bs;
-	unsigned char *xbuf = (unsigned char *)malloc(640*360*3/2);
-	assert(xbuf);
+	uint32_t iNal = 0;
+	yuv = sfifo_get_active_buf(gbuf_p1);
+	bs = sfifo_get_free_buf(gbuf_p2);
+	bs->cur_size = 0;
+	if (yuv != NULL) {
 
-//	while(1)
+		yuyv_to_yuv420P(yuv->buffer, c->xbuf, 640, 360);
+		sfifo_put_free_buf(yuv, gbuf_p1);
+	}
+
+	/*yuv420p*/
+	c->pPic_in->planes[0] = &c->xbuf[c->y_size*3/2];						//Y
+	c->pPic_in->planes[1] = &c->xbuf[c->y_size*3/2+c->y_size];				//U
+	c->pPic_in->planes[2] = &c->xbuf[c->y_size*3/2+c->y_size+c->y_size/4];	//V
+
+	x265_encoder_encode(c->pHandle, &c->pNals, &iNal, c->pPic_in, NULL);	
+
+	for(j=0;j<iNal;j++)
 	{
-		frame_num = 10;
-		//Loop to Encode
-		for( i=0;i<frame_num;i++)
+		memcpy(&bs->buffer[bs->cur_size], c->pNals[j].payload, c->pNals[j].sizeBytes);
+		bs->cur_size+=c->pNals[j].sizeBytes;
+	}	
+	//Flush Decoder
+	while(1)
+	{
+		if((x265_encoder_encode(c->pHandle, &c->pNals, &iNal, NULL, NULL)) == 0){
+			break;
+		}
+		for(j=0;j<iNal;j++)
 		{
-			yuv = sfifo_get_active_buf(gbuf_p1);
-			bs = sfifo_get_free_buf(gbuf_p2);
-			bs->cur_size = 0;
-			assert(yuv);
-			if (yuv != NULL) {
-
-				yuyv_to_yuv420P(yuv->buffer, xbuf, 640, 360);
-				sfifo_put_free_buf(yuv, gbuf_p1);
-			}
-
-			/*yuv420p*/
-			pPic_in->planes[0] = &xbuf[y_size*3/2*0+0];		//Y
-			pPic_in->planes[1] = &xbuf[y_size*3/2*0+y_size];	//U
-			pPic_in->planes[2] = &xbuf[y_size*3/2*0+y_size+y_size/4];	//V
-
-			ret = x265_encoder_encode(pHandle,&pNals,&iNal,pPic_in,NULL);	
-			if(ret<0)
-				printf("%s[%d] ret:%d \n",__func__,__LINE__,ret);
-
-			for(j=0;j<iNal;j++)
-			{
-				memcpy(&bs->buffer[bs->cur_size], pNals[j].payload, pNals[j].sizeBytes);
-				bs->cur_size+=pNals[j].sizeBytes;
-			}	
-			//Flush Decoder
-			while(1)
-			{
-				ret=x265_encoder_encode(pHandle,&pNals,&iNal,NULL,NULL);
-				if(ret==0){
-					break;
-				}
-				//	printf("Flush 1 frame.\n");
-
-				for(j=0;j<iNal;j++)
-				{
-					memcpy(&bs->buffer[bs->cur_size], pNals[j].payload, pNals[j].sizeBytes);
-					bs->cur_size+=pNals[j].sizeBytes;
-				}
-			}
-			sfifo_put_active_buf(bs, gbuf_p2);
-			printf("[%s] [%d] ########Succeed encode frame : %d cur_size : 0x%x ######## \n", __func__,__LINE__, cnt++, bs->cur_size);
+			memcpy(&bs->buffer[bs->cur_size], c->pNals[j].payload, c->pNals[j].sizeBytes);
+			bs->cur_size += c->pNals[j].sizeBytes;
 		}
 	}
-	free(xbuf);
-
-	x265_encoder_close(pHandle);
-	x265_picture_free(pPic_in);
-	x265_param_free(pParam);
-	free(buff);
-
-	printf("%s[%d]\n",__func__,__LINE__);
-
+	sfifo_put_active_buf(bs, gbuf_p2);
+	printf("[%s] [%d] encode : %8d size : 0x%8x \n", __func__,__LINE__, cnt++, bs->cur_size);
 	return 0;
 }
